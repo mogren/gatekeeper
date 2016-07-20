@@ -37,12 +37,9 @@ def scaleDown(name)
   puts "We now have #{service.scale.real} containers in the stack #{service.name}"
 end
 
-def checkDog()
-  dog = Dogapi::Client.new(ENV['DOGAPI_KEY'], ENV['DOGAPP_KEY'])
-end
+#def checkStack(stackname)
 
-
-scaleUp('1s33')
+scaleDown('1s33')
 #
 # def every_n_seconds(n)
 # 	  loop do
