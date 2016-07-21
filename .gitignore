@@ -12,7 +12,8 @@
 
 # Used by dotenv library to load environment variables.
 .env
-
+# Make sure the json isnt in git
+*.json
 ## Specific to RubyMotion:
 .dat*
 .repl_history

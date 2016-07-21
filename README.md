@@ -20,3 +20,31 @@
    r = resource.get.to_json :content_type => 'application/json'
  end
 ```
+
+```ruby
+require 'rancher/api'
+require 'dotenv'
+require 'json'
+Dotenv.load
+Rancher::Api.configure do |config|
+  config.url = ENV['API_URL']
+  config.access_key = ENV['ACCESS_KEY']
+  config.secret_key = ENV['SECRET_KEY']
+end
+service = Rancher::Api::Service.find('1a33')
+json_hash = JSON.parse(service.attributes.to_json)
+json_hash["launchConfig"].find { |h| h['labels'] == 'autoscale' }['true']
+
+
+
+service.attributes.keys
+File.open("temp.json","w") do |f|
+  f.write(service.attributes.to_json)
+end
+
+service = Rancher::Api::Service.all.to_a
+service.each do |s|
+  s.select{ |k, v| puts k }
+  #s.include?("\"autoscale\"=>\"true\"")
+end
+```
