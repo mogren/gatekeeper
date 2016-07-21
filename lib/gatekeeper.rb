@@ -1,46 +1,18 @@
 # Require
 require 'rancher/api'
 require 'dotenv'
-require 'dogapi'
-
+require_relative 'gatekeeper/scale.rb'
+require_relative 'gatekeeper/version.rb'
+require_relative 'connect.rb'
 # Load .env from root
 Dotenv.load
 
-def connectRancher()
-# Connect to rancher API
-  Rancher::Api.configure do |config|
-    config.url = ENV['API_URL']
-    config.access_key = ENV['ACCESS_KEY']
-    config.secret_key = ENV['SECRET_KEY']
-  end
-end
+s = Scale.new('1s33')
+#s.up
+#sleep 50
+#s.down
 
-# Function to scale up
-def scaleUp(name)
-  connectRancher()
-  service = Rancher::Api::Service.find(name)
-  s = service.currentScale
-  s += 1
-  service.scale = s
-  service.save
-  puts "We now have #{service.scale.real} containers in the stack #{service.name}"
-end
 
-def scaleDown(name)
-  connectRancher()
-  service = Rancher::Api::Service.find(name)
-  # Scale the service with one container
-  s = service.currentScale
-  s -= 1
-  service.scale = s
-  service.save
-  puts "We now have #{service.scale.real} containers in the stack #{service.name}"
-end
-
-#def checkStack(stackname)
-
-scaleDown('1s33')
-#
 # def every_n_seconds(n)
 # 	  loop do
 # 	    before = Time.now
