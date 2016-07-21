@@ -2,7 +2,7 @@
 require 'rancher/api'
 require_relative 'gatekeeper/scale.rb'
 require_relative 'gatekeeper/version.rb'
-require_relative 'gatekeeper/parse.rb'
+require_relative 'gatekeeper/service.rb'
 require_relative 'connect.rb'
 
 if ENV['RUBY_ENV'] == 'development'
@@ -10,9 +10,10 @@ if ENV['RUBY_ENV'] == 'development'
   Dotenv.load
 end
 
-search()
-
-s = Scale.new(id)
-s.up
+searchService()
+puts @service
+#id = Parse.new
+#s = Scale.new(id)
+#s.up
 #sleep 50
 #s.down

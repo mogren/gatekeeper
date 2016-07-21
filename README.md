@@ -72,3 +72,6 @@ end
  	 puts "At the beep, the time will be #{Time.now.strftime("%X")}…beep!"
  	end
 ```
+
+#todo: fix service class?
+#todo: connect global?
