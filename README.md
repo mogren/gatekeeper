@@ -1,5 +1,12 @@
 # gatekeeper
 
+if RUBY_ENV="development" read from .env
+
+Environment variables needed
+API_URL
+ACCESS_KEY
+SECRET_KEY
+
 ```ruby
  Function to scale up
  def scaleUp(name)
@@ -47,4 +54,18 @@ service.each do |s|
   s.select{ |k, v| puts k }
   #s.include?("\"autoscale\"=>\"true\"")
 end
+```
+
+```ruby
+ def every_n_seconds(n)
+ 	  loop do
+ 	    before = Time.now
+ 	    yield
+ 	    interval = n-(Time.now-before)
+ 	    sleep(interval) if interval > 0
+ 	  end
+ 	end
+ 	every_n_seconds(5) do
+ 	 puts "At the beep, the time will be #{Time.now.strftime("%X")}…beep!"
+ 	end
 ```
