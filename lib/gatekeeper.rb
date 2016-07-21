@@ -10,10 +10,10 @@ if ENV['RUBY_ENV'] == 'development'
   Dotenv.load
 end
 
+# make a global service Hash
+@service = Hash.new
 searchService()
-puts @service
-#id = Parse.new
-#s = Scale.new(id)
-#s.up
-#sleep 50
-#s.down
+@service.each do |id, value|
+  s = Scale.new(id, value)
+  s.up
+end

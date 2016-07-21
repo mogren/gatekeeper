@@ -1,21 +1,15 @@
-@service = {}
-
+# Search for all services and put them into a hash
 def searchService
   connectRancher()
   service = Rancher::Api::Service.all.to_a
   service.each do |s|
-    @service[s.id] = s.name
-  end
-  removeServices()
-end
-
-def removeServices
-  connectRancher()
-  @service.each do |id, name|
-    service = Rancher::Api::Service.find(id)
-    if service.launchConfig.inspect.scan("autoscale").blank?
-      @service.delete(service.id) { |el| "#{el} not found" }
-      next
+    scale = s.launchConfig["labels"].select {|k,v| k["autoscale"] }
+    if scale.values[0] == "true"
+      #@service[s.id] = s.name
+      @service[s.id] ||= Array.new
+      @service[s.id] << s.name
+      maxscale = s.launchConfig["labels"].select {|k,v| k["maxscale"] }
+      @service[s.id] << maxscale.values[0]
     end
   end
 end
