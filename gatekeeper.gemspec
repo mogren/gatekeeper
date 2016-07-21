@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "gatekeeper"
-  spec.version       = '1.0'
+  spec.version       = '0.0.1'
   spec.authors       = ["Jens Skott"]
   spec.email         = ["jens.skott@gmail.com"]
   spec.summary       = %q{Make rancher scale}

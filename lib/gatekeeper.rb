@@ -7,8 +7,9 @@ require_relative 'connect.rb'
 # Load .env from root
 Dotenv.load
 
-s = Scale.new('1s33')
-#s.up
+name = '1s33'
+s = Scale.new(name)
+s.up
 #sleep 50
 #s.down
 
