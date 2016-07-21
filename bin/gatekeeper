@@ -1,3 +1,17 @@
 #!/usr/bin/env ruby -w
 
 # run gatekeeper.rb demonized from here
+lib = File.join(File.dirname(__FILE__), '../lib') 
+puts lib
+def every_x_seconds(x)
+  loop do
+    before = Time.now
+    yield
+    interval = x-(Time.now-before)
+    sleep(interval) if interval > 0
+  end
+end
+
+ every_x_seconds(60) do
+   system("ruby #{lib}/gatekeeper.rb")
+ end

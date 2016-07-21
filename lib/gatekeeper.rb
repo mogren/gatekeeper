@@ -1,9 +1,9 @@
 # Require
 require 'rancher/api'
-require_relative 'gatekeeper/scale.rb'
 require_relative 'gatekeeper/version.rb'
 require_relative 'gatekeeper/service.rb'
 require_relative 'connect.rb'
+require_relative 'gatekeeper/status.rb'
 
 if ENV['RUBY_ENV'] == 'development'
   require 'dotenv'
@@ -15,12 +15,7 @@ end
 # Search for all services that is autoscaling enabled
 searchService()
 
-# Use @service to access app health check
-# Use @service to access rancher-metadata for CPU + memory
-# If need to scale up or down access Scale class
-
-# Scale services
+# Checks the app and metadata for scaling
 @service.each do |id, value|
-  s = Scale.new(id, value)
-#  s.up
+  checkApp(id, value)
 end

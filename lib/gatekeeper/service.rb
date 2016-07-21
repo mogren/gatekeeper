@@ -11,6 +11,8 @@ def searchService
       @service[s.id] << s.name
       maxscale = s.launchConfig["labels"].select {|k,v| k["maxscale"] }
       @service[s.id] << maxscale.values[0]
+      stack = Rancher::Api::Environment.find(s.environmentId)
+      @service[s.id] << stack.name
     end
   end
 end
