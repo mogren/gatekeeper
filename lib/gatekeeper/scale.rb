@@ -1,11 +1,11 @@
 class Scale
-  def initialize(name)
-  @name = name
+  def initialize(id)
+    @id = id
   end
 
   def up
     connectRancher()
-    service = Rancher::Api::Service.find(@name)
+    service = Rancher::Api::Service.find(@id)
     s = service.currentScale
     s += 1
     service.scale = s
@@ -15,7 +15,7 @@ class Scale
 
   def down
     connectRancher()
-    service = Rancher::Api::Service.find(@name)
+    service = Rancher::Api::Service.find(@id)
     # Scale the service with one container
     s = service.currentScale
     s -= 1

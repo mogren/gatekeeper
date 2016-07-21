@@ -7,6 +7,9 @@ API_URL
 ACCESS_KEY
 SECRET_KEY
 
+Label in rancher
+autoscale = ""
+
 ```ruby
  Function to scale up
  def scaleUp(name)

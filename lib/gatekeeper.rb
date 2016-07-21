@@ -2,6 +2,7 @@
 require 'rancher/api'
 require_relative 'gatekeeper/scale.rb'
 require_relative 'gatekeeper/version.rb'
+require_relative 'gatekeeper/parse.rb'
 require_relative 'connect.rb'
 
 if ENV['RUBY_ENV'] == 'development'
@@ -9,8 +10,9 @@ if ENV['RUBY_ENV'] == 'development'
   Dotenv.load
 end
 
-name = '1s33'
-s = Scale.new(name)
+search()
+
+s = Scale.new(id)
 s.up
 #sleep 50
 #s.down
