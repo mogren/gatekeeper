@@ -9,6 +9,7 @@ def searchService
       #@service[s.id] = s.name
       @service[s.id] ||= Array.new
       @service[s.id] << s.name
+      # Add checks to see if maxscale + value is nil? or blank?
       maxscale = s.launchConfig["labels"].select {|k,v| k["maxscale"] }
       @service[s.id] << maxscale.values[0]
       stack = Rancher::Api::Environment.find(s.environmentId)
