@@ -12,8 +12,15 @@ end
 
 # make a global service Hash
 @service = Hash.new
+# Search for all services that is autoscaling enabled
 searchService()
+
+# Use @service to access app health check
+# Use @service to access rancher-metadata for CPU + memory
+# If need to scale up or down access Scale class
+
+# Scale services
 @service.each do |id, value|
   s = Scale.new(id, value)
-  s.up
+#  s.up
 end

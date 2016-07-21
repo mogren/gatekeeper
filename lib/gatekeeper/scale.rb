@@ -9,7 +9,8 @@ class Scale
     connectRancher()
     service = Rancher::Api::Service.find(@id)
     s = service.currentScale
-    if s < @maxscale
+    # Check if stack is lower or equal to maxscale
+    if s <= @maxscale
       s += 1
       service.scale = s
       service.save
@@ -22,8 +23,8 @@ class Scale
   def down
     connectRancher()
     service = Rancher::Api::Service.find(@id)
-    # Scale the service with one container
     s = service.currentScale
+    # If you only have one container left
     if s == 1
       puts "Cant scale down below 1 container"
     else

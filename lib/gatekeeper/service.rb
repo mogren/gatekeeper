@@ -3,6 +3,7 @@ def searchService
   connectRancher()
   service = Rancher::Api::Service.all.to_a
   service.each do |s|
+    #Search for autoscale tag
     scale = s.launchConfig["labels"].select {|k,v| k["autoscale"] }
     if scale.values[0] == "true"
       #@service[s.id] = s.name
