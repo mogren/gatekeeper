@@ -15,7 +15,8 @@ end
 # Search for all services that is autoscaling enabled
 searchService()
 
+puts @service.inspect
 # Checks the app and metadata for scaling
 @service.each do |id, value|
-  checkApp(id, value)
+  #checkApp(id, value)
 end
