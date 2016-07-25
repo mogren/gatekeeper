@@ -41,7 +41,7 @@ def checkDog (id)
   mem = mem['200']['series']
   puts "Data for #{id}"
   if mem.empty?
-    puts "No memory data for #{id}"
+    puts "No memory data available"
   else
     mem[0]['pointlist'].each do |p,v|
       puts "Mem used #{v}"
