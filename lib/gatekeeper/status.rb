@@ -36,14 +36,24 @@ def checkDog (id)
   mem = dog.get_points(memQuery, from, to)
   # make them hasish
   cpu = Hash[*cpu]
-  #mem = Hash[*mem]
+  mem = Hash[*mem]
   cpu = cpu['200']['series']
-  #mem = mem['200']['series']
+  mem = mem['200']['series']
   puts "Data for #{id}"
-  cpu[0]['pointlist'].each do |p,v|
-    puts "Cpu used #{v}"
+  if mem.empty?
+    puts "No memory data for #{id}"
+  else
+    mem[0]['pointlist'].each do |p,v|
+      puts "Mem used #{v}"
+    end
   end
-  #puts mem[0]['pointlist']
+  if cpu.empty?
+    puts "No cpu data for #{id}"
+  else
+    cpu[0]['pointlist'].each do |p,v|
+      puts "Cpu used #{v}"
+    end
+  end
 end
 
 
