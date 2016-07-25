@@ -6,9 +6,11 @@ def checkContainers(id,value)
   service = Rancher::Api::Service.find(id)
   containers = service.instances
   containers.each do |c|
-    puts c.name
-    checkDog(c.name)
+    #puts c.name
+    #checkApp(c.name)
   end
+  #puts service.name
+  checkDog(service.name)
 end
 
 def checkApp (id,value)
@@ -20,12 +22,28 @@ def checkApp (id,value)
 end
 
 def checkDog (id)
+  dogkey = ENV['DOGAPI_KEY']
+  dogapp = ENV['DOGAPP_KEY']
+
   dog = Dogapi::Client.new(dogkey, dogapp)
   # Get points from the 60 seconds
   from = Time.now - 60
   to = Time.now
-  query = 'avg:docker.cpu.user{#{id}},avg:docker.mem.in_use{#{id}}'
-  metrics = dog.get_points(query, from, to)
+    #query for cpu and memory
+  cpuQuery = "avg:docker.cpu.user{io.rancher.stack.name:#{id}}"
+  cpu = dog.get_points(cpuQuery, from, to)
+  memQuery = "avg:docker.mem.in_use{io.rancher.stack.name:#{id}}"
+  mem = dog.get_points(memQuery, from, to)
+  # make them hasish
+  cpu = Hash[*cpu]
+  #mem = Hash[*mem]
+  cpu = cpu['200']['series']
+  #mem = mem['200']['series']
+  puts "Data for #{id}"
+  cpu[0]['pointlist'].each do |p,v|
+    puts "Cpu used #{v}"
+  end
+  #puts mem[0]['pointlist']
 end
 
 
