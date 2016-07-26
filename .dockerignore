@@ -1,0 +1,9 @@
+/tests/
+.gitignore
+Dockerfile
+LICENSE
+README.md
+Rakefile
+/.git/
+.env
+example.rb

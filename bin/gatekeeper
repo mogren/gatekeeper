@@ -1,7 +1,5 @@
-#!/usr/bin/env ruby -w
-
 # run gatekeeper.rb demonized from here
-lib = File.join(File.dirname(__FILE__), '../lib') 
+lib = File.join(File.dirname(__FILE__), '../lib')
 puts lib
 def every_x_seconds(x)
   loop do
