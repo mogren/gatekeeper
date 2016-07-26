@@ -14,7 +14,6 @@ end
 @service = Hash.new
 # Search for all services that is autoscaling enabled
 searchService()
-puts "All services to be autoscaled #{@service}"
 # Checks the app and metadata for scaling
 @service.each do |id, value|
   checkContainers(id, value)

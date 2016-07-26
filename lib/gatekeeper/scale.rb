@@ -14,7 +14,7 @@ class Scale
       s += 1
       service.scale = s
       service.save
-      puts "We now have #{service.scale.real} containers in the stack #{service.name}"
+      puts "#{service.name} now have #{service.scale.real} containers"
     else
       puts "Your max containers has been reached. Please change the stack value"
     end
@@ -24,9 +24,18 @@ class Scale
     connectRancher()
     service = Rancher::Api::Service.find(@id)
     s = service.currentScale
+    env = service.launchConfig["labels"].select {|k,v| k["environment"] }
+    case env
+    when "dev"
+      minScale = 1
+    when "prod"
+      minScale = 2
+    else
+      minScale = 1
+    end
     # If you only have one container left
-    if s == 1
-      puts "Cant scale down below 1 container"
+    if s == minScale
+      puts "Cant scale down below #{minScale} container"
     else
       s -= 1
       service.scale = s

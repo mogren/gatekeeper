@@ -10,7 +10,7 @@ def checkContainers(id,value)
     #checkApp(c.name)
   end
   #puts service.name
-  checkDog(service.name)
+  checkDog(service.name, id, value)
 end
 
 def checkApp (id,value)
@@ -21,7 +21,7 @@ def checkApp (id,value)
   #s.up
 end
 
-def checkDog (id)
+def checkDog (id,scaleId,scaleValue)
   dogkey = ENV['DOGAPI_KEY']
   dogapp = ENV['DOGAPP_KEY']
 
@@ -29,7 +29,7 @@ def checkDog (id)
   # Get points from the 60 seconds
   from = Time.now - 60
   to = Time.now
-    #query for cpu and memory
+  #query for cpu and memory
   cpuQuery = "avg:docker.cpu.user{io.rancher.stack.name:#{id}}"
   cpu = dog.get_points(cpuQuery, from, to)
   memQuery = "avg:docker.mem.in_use{io.rancher.stack.name:#{id}}"
@@ -39,29 +39,29 @@ def checkDog (id)
   mem = Hash[*mem]
   cpu = cpu['200']['series']
   mem = mem['200']['series']
-  puts "Data for #{id}"
+  @cpuaverage = []
+  @memaverage = []
+
   if mem.empty?
     puts "No memory data available"
   else
     mem[0]['pointlist'].each do |p,v|
-      puts "Mem used #{v}"
+      @memaverage.push(v)
     end
   end
   if cpu.empty?
     puts "No cpu data for #{id}"
   else
     cpu[0]['pointlist'].each do |p,v|
-      puts "Cpu used #{v}"
+      @cpuaverage.push(v)
     end
   end
+  if @cpuaverage.inject(0.0) { |sum, el| sum + el } / @cpuaverage.size > 80
+    s = Scale.new(scaleId, scaleValue)
+    s.up
+  else
+    s = Scale.new(scaleId, scaleValue)
+    s.down
+  end
 end
-
-
-# Use @service to access app health check
-# Use @service to access rancher-metadata for CPU + memory
-  # If need to scale up or down access Scale class
-  # Scale services
-#@service.each do |id, value|
-#  s = Scale.new(id, value)
-  #  s.up
-#end
+## MAKE ALGORITHM TO CHECK FOR CPU METCIS AVERAGE
