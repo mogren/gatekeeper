@@ -1,21 +1,16 @@
 FROM alpine:3.4
 
 ENV BUILD_PACKAGES curl-dev ruby-dev build-base
-ENV RUBY_PACKAGES add ruby ruby-bundler
 
-# Update and install all of the required packages.
-# At the end, remove the apk cache
-RUN apk update && \
-    apk upgrade && \
-    apk add $BUILD_PACKAGES && \
-    apk add $RUBY_PACKAGES && \
-    rm -rf /var/cache/apk/*
+# Update and install base packages
+RUN apk update && apk upgrade && apk add bash $BUILD_PACKAGES
+# Install ruby and ruby-bundler
+RUN apk add ruby ruby-io-console ruby-bundler
 
 RUN echo 'gem: --no-document --no-ri --no-rdoc' > /etc/gemrc
 
-#RUN apk update && apk upgrade && apk --update add \
-#    ruby ruby-irb ruby-rake ruby-io-console ruby-bigdecimal ruby-json ruby-bundler \
-#    libstdc++ tzdata bash \
+# Clean APK cache
+RUN rm -rf /var/cache/apk/*
 
 # Make and copy the application
 RUN mkdir /app
@@ -25,4 +20,4 @@ RUN chmod +x bin/gatekeeper
 # Make sure all gems are there
 RUN bundler install
 # Run the application
-CMD ["ruby bin/gatekeeper"]
+CMD ["ruby", "bin/gatekeeper"]
