@@ -1,0 +1,31 @@
+influxDB:
+  environment:
+    FORCE_HOSTNAME: auto
+    PRE_CREATE_DB: telegraf
+  labels:
+    io.rancher.container.pull_image: always
+  image: tutum/influxdb:latest
+  stdin_open: true
+telegraf:
+  environment:
+    INFLUXDB_HOST: influx
+  labels:
+    io.rancher.scheduler.global: 'true'
+    io.rancher.container.pull_image: always
+  image: mardle/telegraf:latest
+  links:
+  - influxDB:influx
+  volumes:
+  - /var/run:/var/run
+  - /sys/fs/cgroup:/sys/fs/cgroup
+  stdin_open: true
+scaleapp:
+  environment:
+    API_URL: $RANCHER_URL
+    ACCESS_KEY: $RANCHER_ACCESSKEY
+    SECRET_KEY: $RANCHER_SECRETKEY
+  labels:
+    io.rancher.container.pull_image: always
+  tty: true
+  image: mardle/gatekeeper:latest
+  stdin_open: true

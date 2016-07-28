@@ -10,6 +10,7 @@
 /test/version_tmp/
 /tmp/
 example.rb
+getinfo.sh
 
 # Used by dotenv library to load environment variables.
 .env

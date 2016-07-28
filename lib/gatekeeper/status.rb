@@ -8,9 +8,9 @@ def checkContainers(id,value)
   containers.each do |c|
     #puts c.name
     #checkApp(c.name)
+    checkInflux(c.name)
   end
-  #puts service.name
-  checkDog(service.name, id, value)
+  #checkDog(service.name, id, value)
 end
 
 def checkApp (id,value)
@@ -21,6 +21,12 @@ def checkApp (id,value)
   #s.up
 end
 
+# Check influx for data
+def checkInflux(id)
+  puts id
+end
+
+# Decap?
 def checkDog (id,scaleId,scaleValue)
   dogkey = ENV['DOGAPI_KEY']
   dogapp = ENV['DOGAPP_KEY']
@@ -65,3 +71,4 @@ def checkDog (id,scaleId,scaleValue)
   end
 end
 ## MAKE ALGORITHM TO CHECK FOR CPU METCIS AVERAGE
+## Query influx instead. building agents
