@@ -6,3 +6,4 @@ def connectRancher
     config.secret_key = ENV['SECRET_KEY']
   end
 end
+  

@@ -11,7 +11,7 @@ DOGAPP_KEY
 
 Label in rancher
 autoscale = ""
-docker run -e FORCE_HOSTNAME=auto -e SEEDS="master:8090" --name influxDB --expose 8090 --expose=8099 -d tutum/influxdb:latest
+docker run -e FORCE_HOSTNAME=auto -e SEEDS="master:8090" --name influxDB -p 8083:8083 -p 8086:8086 --expose 8090 --expose=8099 -d tutum/influxdb:latest
 docker run -v /var/run:/var/run -v /sys/fs/cgroup:/sys/fs/cgroup --link influxDB:influx -e "INFLUXDB_HOST=influx" -d mardle/telegraf
 
 curl --unix-socket /var/run/docker.sock http:/containers/json

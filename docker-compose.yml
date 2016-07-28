@@ -28,4 +28,6 @@ scaleapp:
     io.rancher.container.pull_image: always
   tty: true
   image: mardle/gatekeeper:latest
+  links:
+  - influxDB:influx
   stdin_open: true

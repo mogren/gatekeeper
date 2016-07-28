@@ -4,6 +4,7 @@ require_relative 'gatekeeper/version.rb'
 require_relative 'gatekeeper/service.rb'
 require_relative 'connect.rb'
 require_relative 'gatekeeper/status.rb'
+require 'influxdb'
 
 if ENV['RUBY_ENV'] == 'development'
   require 'dotenv'
