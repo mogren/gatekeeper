@@ -23,9 +23,9 @@ end
 # Check influx for data
 def checkInflux(id)
   database = 'telegraf'
-  influxdb = InfluxDB::Client.new database host: "influx"
-  influxdb.query 'SELECT * FROM cpu_usage_user WHERE time > now() - 1m;'
-
+  influxdb = InfluxDB::Client.new database host: "influxDB"
+  c = influxdb.query 'SELECT * FROM cpu_usage_user WHERE time > now() - 1m;'
+  puts c
 
 end
 
