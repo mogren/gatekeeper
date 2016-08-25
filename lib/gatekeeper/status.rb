@@ -13,7 +13,8 @@ end
 def checkInflux(id)
   database = 'telegraf'
   influxdb = InfluxDB::Client.new database, host: "influxDB"
-  c = influxdb.query 'SELECT * FROM docker_container_cpu WITH KEY = "cpu" WHERE time > now() - 1m;'
+  #influxdb = InfluxDB::Client.new database, host: "52.8.235.35"
+  c = influxdb.query "SELECT container_name, host, usage_percent FROM docker_container_cpu WHERE autoscale = 'true' and container_name = 'r-#{id}' and usage_percent > 0 and time > now() - 10m;"
   puts c
 
 end

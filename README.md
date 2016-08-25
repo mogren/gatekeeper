@@ -1,5 +1,11 @@
 # gatekeeper
 
+### Installing
+```console
+sudo gem install bundle
+bundle install
+```
+
 ### To use .env files.
 ```console
 export RUBY_ENV="development" 
