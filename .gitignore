@@ -55,3 +55,4 @@ build-iPhoneSimulator/
 ## App specific ignores
 #
 config.*
+.idea
