@@ -6,6 +6,7 @@ def checkContainers(id,value)
   containers = service.instances
   containers.each do |c|
     checkInflux(c.name)
+    # TODO: Something!
   end
 end
 
@@ -13,7 +14,8 @@ end
 def checkInflux(id)
   database = 'telegraf'
   influxdb = InfluxDB::Client.new database, host: "influxDB"
-  c = influxdb.query 'SELECT * FROM docker_container_cpu WITH KEY = "cpu" WHERE time > now() - 1m;'
+  # TODO: Add: autoscale = 'true' AND ?
+  c = influxdb.query 'SELECT container_name, host, usage_percent FROM docker_container_cpu WITH KEY = "cpu" WHERE time > now() - 1m;'
   puts c
-
+  c.length > 0
 end
